@@ -4,11 +4,11 @@ import torch.optim as optim
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from tqdm import tqdm
 from dataset import get_loaders
 from model import get_resnet18  #resnet19모델 불러오기
 from utils import calculate_accuracy, calculate_precision, calculate_recall, calculate_f1_score
+from confusion_matrix import evaluate_on_test
 
 #데이터 경로
 data_dir = r"C:\Users\AMI-DEEP3\Desktop\chest\chest_xray"
@@ -147,36 +147,8 @@ def train_model(data_dir):
     plt.grid(True)
     plt.show()
 
-#혼동행렬 
-def evaluate_on_test(data_dir, save_dir):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    _, _, test_loader = get_loaders(data_dir, batch_size=32)
-
-    model = get_resnet18(num_classes=2).to(device)
-    model.load_state_dict(torch.load(os.path.join(save_dir, "best_model.pth")))
-    model.eval()
-
-    all_preds = []
-    all_labels = []
-
-    with torch.no_grad():
-        for inputs, labels in test_loader:
-            inputs = inputs.to(device)
-            outputs = model(inputs)
-            _, preds = torch.max(outputs, 1)
-
-            all_preds.extend(preds.cpu().numpy())
-            all_labels.extend(labels.numpy())
-
-    cm = confusion_matrix(all_labels, all_preds)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['NORMAL', 'PNEUMONIA'])
-    disp.plot(cmap='Blues', values_format='d')
-    plt.title("Confusion Matrix on Test Set")
-    plt.show()
-
 
 if __name__ == "__main__":
     train_model(data_dir)
-    evaluate_on_test(data_dir, save_dir)
 
 

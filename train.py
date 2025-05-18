@@ -3,10 +3,12 @@ import torch.nn as nn
 import torch.optim as optim
 import os
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from tqdm import tqdm
 from dataset import get_loaders
-from model import get_resnet18
-from utils import calculate_accuracy
+from model import get_resnet18  #resnet19모델 불러오기
+from utils import calculate_accuracy, calculate_precision, calculate_recall, calculate_f1_score
 
 #데이터 경로
 data_dir = r"C:\Users\AMI-DEEP3\Desktop\chest\chest_xray"
@@ -14,13 +16,15 @@ data_dir = r"C:\Users\AMI-DEEP3\Desktop\chest\chest_xray"
 #가중치 저장 경로
 save_dir = "weights"
 
+
 def train_model(data_dir):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     #하이퍼파라미터 설정
-    epoch=10
+    epoch=3
     lr=1e-4
     batch_size=32
+    patience=3
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     train_loader, val_loader, _ = get_loaders(data_dir,batch_size)
     model = get_resnet18(num_classes=2).to(device)
@@ -36,8 +40,7 @@ def train_model(data_dir):
 
     best_val_loss = float("inf")
     early_stop_counter = 0
-    patience=3
-
+    
     for epoch in range(epoch):
         model.train()
         train_loss, train_acc=0, 0
@@ -60,9 +63,10 @@ def train_model(data_dir):
             #매 배치마다 진행 상화 표시
             tbar.set_postfix(loss=loss.item(), acc=acc)
 
-    #=== validataion ===
+    #========== validataion ===========
         model.eval()
         val_loss, val_acc= 0,0
+        val_precision, val_recall, val_f1 = 0, 0, 0
 
         #역전파 계산 하지마 val
         with torch.no_grad():
@@ -73,10 +77,29 @@ def train_model(data_dir):
                 loss = criterion(outputs, labels )
                 acc = calculate_accuracy(outputs, labels)
 
+
+                
+                precision = calculate_precision(outputs, labels)
+                recall = calculate_recall(outputs, labels)
+                f1 = calculate_f1_score(outputs, labels)
+
                 val_loss += loss.item()
                 val_acc += acc
+                val_precision += precision  
+                val_recall += recall        
+                val_f1 += f1                
+
+        # === 평균 계산 ===
         avg_val_loss = val_loss / len(val_loader)
         avg_val_acc = val_acc / len(val_loader)
+        avg_val_precision = val_precision / len(val_loader)  
+        avg_val_recall = val_recall / len(val_loader)
+        avg_val_f1 = val_f1 / len(val_loader)
+
+        # === 출력 ===
+        print(f"[Epoch {epoch+1}] Val_Acc: {avg_val_acc:.4f}, Precision: {avg_val_precision:.4f}, Recall: {avg_val_recall:.4f}, F1: {avg_val_f1:.4f}")
+
+
         
         #정확도를 기준으로 Ealystopping
         if avg_val_loss < best_val_loss:
@@ -124,7 +147,36 @@ def train_model(data_dir):
     plt.grid(True)
     plt.show()
 
+#혼동행렬 
+def evaluate_on_test(data_dir, save_dir):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    _, _, test_loader = get_loaders(data_dir, batch_size=32)
+
+    model = get_resnet18(num_classes=2).to(device)
+    model.load_state_dict(torch.load(os.path.join(save_dir, "best_model.pth")))
+    model.eval()
+
+    all_preds = []
+    all_labels = []
+
+    with torch.no_grad():
+        for inputs, labels in test_loader:
+            inputs = inputs.to(device)
+            outputs = model(inputs)
+            _, preds = torch.max(outputs, 1)
+
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.numpy())
+
+    cm = confusion_matrix(all_labels, all_preds)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['NORMAL', 'PNEUMONIA'])
+    disp.plot(cmap='Blues', values_format='d')
+    plt.title("Confusion Matrix on Test Set")
+    plt.show()
+
+
 if __name__ == "__main__":
     train_model(data_dir)
+    evaluate_on_test(data_dir, save_dir)
 
 

@@ -17,27 +17,25 @@ save_dir = "weights"
 def train_model(data_dir):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    train_loader, val_loader, _ = get_loaders(data_dir,batch_size=32)
+    #하이퍼파라미터 설정
+    epoch=10
+    lr=1e-4
+    batch_size=32
+
+    train_loader, val_loader, _ = get_loaders(data_dir,batch_size)
     model = get_resnet18(num_classes=2).to(device)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(),lr=1e-4)
-
-    #가장 잘나온 가중치 저장을 위해
-    best_val_acc=0.0
+    optimizer = optim.Adam(model.parameters(),lr)
 
     #학습, 검증 시각 그래프
     train_loss_list=[]
     val_loss_list=[]
-
     train_acc_list=[]
     val_acc_list=[]
 
-    #하이퍼파라미터 설정
-    epoch=10
-
     best_val_loss = float("inf")
-    early_stop_count=0
+    early_stop_counter = 0
     patience=3
 
     for epoch in range(epoch):
@@ -81,15 +79,15 @@ def train_model(data_dir):
         avg_val_acc = val_acc / len(val_loader)
         
         #정확도를 기준으로 Ealystopping
-        if avg_val_acc > best_val_acc:
-            best_val_acc=avg_val_acc
+        if avg_val_loss < best_val_loss:
+            best_val_loss=avg_val_loss
             early_stop_counter=0
 
             #모델 저장도 여기서 진행
             save_path = os.path.join(save_dir, "best_model.pth")
             os.makedirs(save_dir, exist_ok=True)
             torch.save(model.state_dict(), save_path)
-            print(f"[Epoch{epoch+1}] validation_best model saved Acc={best_val_acc:.4f}")
+            print(f"[Epoch {epoch+1}] Best model saved! Val_Loss={best_val_loss:.4f}")
 
         else:
             early_stop_counter+=1

@@ -12,8 +12,3 @@ val = 8 , 8
 test = 234 , 390
 
 Classification Model을 활용해서 비정상 폐렴군의 이미지를 분류함
-
-Model
-1. Resnet18
-2. Densenet
-3. vgg16

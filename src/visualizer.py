@@ -38,9 +38,8 @@ def plot_results(history, save_dir):
     plt.savefig(os.path.join(save_dir, "accuracy_curve.png"), dpi=300)
     plt.close()
 
-def save_confusion_matrix(history, y_true, y_pred, class_names, save_dir):
+def save_confusion_matrix(y_true, y_pred, class_names, save_dir):
     
-    # 혼동 행렬(Confusion Matrix) 추가 생성
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(7, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 

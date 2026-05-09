@@ -4,7 +4,7 @@ train, val
 '''
 import torch
 from tqdm import tqdm
-from .utils import calculate_accuracy
+from .utils import calculate_all_metrics
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
@@ -21,10 +21,12 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
         loss.backward()
         optimizer.step()
 
-        acc = calculate_accuracy(outputs, labels)
+        metrics = calculate_all_metrics(outputs, labels)
+
+        current_acc = metrics['accuracy']
         total_loss += loss.item()
-        total_acc += acc
-        tbar.set_postfix(loss=loss.item(), acc=acc)
+        total_acc += current_acc
+        tbar.set_postfix(loss=f"{loss.item():.4f}", acc=f"{current_acc:.4f}")
 
     return total_loss / len(loader), total_acc/len(loader)
 
@@ -36,9 +38,11 @@ def validate(model, loader, criterion, device):
             inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs)
             loss = criterion(outputs, labels)
-            acc = calculate_accuracy(outputs, labels)
+
+            metrics = calculate_all_metrics(outputs, labels)
+            current_acc = metrics['accuracy']
 
             val_loss += loss.item()
-            val_acc += acc
+            val_acc += current_acc
     
     return val_loss / len(loader), val_acc / len(loader)

@@ -1,7 +1,6 @@
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-
 def get_loaders(data_dir,batch_size):
  
     train_transform = transforms.Compose([

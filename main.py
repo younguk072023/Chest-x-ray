@@ -3,9 +3,10 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
+
 from configs.config import Config
 from src.dataset import get_loaders
-from src.model import get_model
+from models.SimpleNet import SimpleNet
 from src.engine import train_one_epoch, validate
 from src.visualizer import plot_results
 
@@ -18,12 +19,11 @@ def main():
     train_loader, val_loader, _ = get_loaders(Config.data_dir, Config.batch_size)
 
     print(f"Model: {Config.MODEL_NAME}, Batch_size: {Config.batch_size}, LR: {Config.lr}, Epochs: {Config.epoch}")
-    model = get_model(num_classes=2).to(Config.device)
+    model = SimpleNet(num_classes=2).to(Config.device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=Config.lr)
 
     best_val_loss = float("inf")
-    early_stop_counter = 0
     history = {'train_loss':[], 'val_loss':[], 'train_acc':[],'val_acc':[]}
 
     for epoch in range(Config.epoch):
@@ -43,16 +43,13 @@ def main():
             torch.save(model.state_dict(), save_path)
 
             best_val_loss = val_loss
-            early_stop_counter = 0
     
             print("Best Model Saved.")
             print(f"train loss: {train_loss:.4f} val Loss: {val_loss:.4f}")
+            
         else:
-            early_stop_counter += 1
             print(f"train loss: {train_loss:.4f} val Loss: {val_loss:.4f}")
-            if early_stop_counter >= Config.patience:
-                print("Early Stopping Triggered.")
-                break
+
                 
     plot_results(history, model_save_dir)
 

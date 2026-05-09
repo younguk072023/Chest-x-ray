@@ -2,7 +2,6 @@
 epoch당 돌아가는 로직
 train, val
 '''
-
 import torch
 from tqdm import tqdm
 from .utils import calculate_accuracy

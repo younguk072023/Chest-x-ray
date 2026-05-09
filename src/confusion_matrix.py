@@ -2,7 +2,7 @@ import torch
 import matplotlib.pyplot as plt
 import os
 from src.dataset import get_loaders
-from src.model import get_resnet18
+from models import SimpleNet
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
@@ -11,7 +11,7 @@ def evaluate_on_test(data_dir, save_dir):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     _, _, test_loader = get_loaders(data_dir, batch_size=32)
 
-    model = get_resnet18(num_classes=2).to(device)
+    model = SimpleNet(num_classes=2).to(device)
     model.load_state_dict(torch.load(os.path.join(save_dir, "best_model.pth")))
     model.eval()
 

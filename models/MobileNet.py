@@ -32,7 +32,7 @@ class DepthwiseSeparableConv(nn.Module):
             ),
 
             nn.BatchNorm2d(out_channels),
-            nn.ReLU(inpplace=True)
+            nn.ReLU(inplace=True)
 
         )
 

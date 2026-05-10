@@ -31,24 +31,31 @@ class GradCam(nn.Module):
         input shape: [1, C, H, W]
         return: Grad-CAM heatmap, shape [H, W]
         """
+        assert input.size(0) == 1, "Grad-CAM expects batch size 1."
+
         self.model.eval()
+
+        self.forward_result = None
+        self.backward_result = None
 
         outs = self.model(input)
 
-        # batch size 1 기준
         if outs.dim() == 2:
             outs = outs[0]
 
         if target_index is None:
             target_index = outs.argmax().item()
 
-        self.model.zero_grad()
+        self.model.zero_grad(set_to_none=True)
 
         target_score = outs[target_index]
         target_score.backward(retain_graph=True)
 
-        gradients = self.backward_result      # [C, H, W]
-        activations = self.forward_result     # [C, H, W]
+        if self.forward_result is None or self.backward_result is None:
+            raise RuntimeError("Forward or backward hook did not capture results.")
+
+        gradients = self.backward_result
+        activations = self.forward_result
 
         weights = torch.mean(
             gradients,
@@ -71,11 +78,9 @@ class GradCam(nn.Module):
         return cam.detach().cpu().squeeze().numpy()
 
     def forward_hook(self, module, input, output):
-        # output: [1, C, H, W] -> [C, H, W]
         self.forward_result = output.detach().squeeze(0)
 
     def backward_hook(self, module, grad_input, grad_output):
-        # grad_output[0]: [1, C, H, W] -> [C, H, W]
         self.backward_result = grad_output[0].detach().squeeze(0)
 
     def remove_hooks(self):

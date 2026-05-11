@@ -40,7 +40,7 @@
 ---
 
 ### 2. Learning Curves (Loss & Accuracy)
-모델의 학습 과정을 나타내는 그래프입니다. 과적합(Overfitting) 여부와 학습 안정성을 확인할 수 있습니다.
+ResNet Loss & Accuracy graph
 
 <div align="center">
   <img src="weights/ResNet/loss_curve.png" alt="Loss Curve" width="48%">
@@ -70,10 +70,10 @@
       <td align="center"><b>MobileNet Grad-CAM</b></td>
     </tr>
     <tr>
-      <td><img src="images/gradcam_SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
-      <td><img src="images/gradcam_vgg.png" alt="VGG Grad-CAM" width="300"></td>
-      <td><img src="images/gradcam_resnet.png" alt="ResNet Grad-CAM" width="300"></td>
-      <td><img src="images/gradcam_mobilenet.png" alt="MobileNet Grad-CAM" width="300"></td>
+      <td><img src="images/SimpleNet/gradcam_SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
+      <td><img src="weights/VGGNet/gradcam_results/000_01_IM-0003-0001_GT-NORMAL_Pred-NORMAL_Prob-1.00.png" alt="VGG Grad-CAM" width="300"></td>
+      <td><img src="weights/ResNet/gradcam_results/000_01_IM-0003-0001_GT-NORMAL_Pred-NORMAL_Prob-1.00.png" alt="ResNet Grad-CAM" width="300"></td>
+      <td><img src="weights/MobileNet/gradcam_results/cam_0_1_NORMAL.png" alt="MobileNet Grad-CAM" width="300"></td>
     </tr>
   </table>
 </div>

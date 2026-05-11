@@ -26,6 +26,14 @@
 
 ## Performance & Results
 
+### Training Setup
+
+* **Epochs:** 50
+* **Learning Rate:** 1e-4 (0.0001)
+* **Batch Size:** 32
+* **Optimizer:** Adam
+* **Loss Function:** CrossEntropyLoss
+
 ### Quantitative Evaluation (Test Metrics)
 
 | Model | Accuracy | Precision | Recall | Specificity | F1-Score |

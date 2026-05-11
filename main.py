@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from configs.config import Config
 from src.dataset import get_loaders
 from models.SimpleNet import SimpleNet
+from models.VGGNet import VGGNet
 from src.engine import train_one_epoch, validate
 from src.visualizer import plot_results
 
@@ -19,7 +20,7 @@ def main():
     train_loader, val_loader, _ = get_loaders(Config.data_dir, Config.batch_size)
 
     print(f"Model: {Config.MODEL_NAME}, Batch_size: {Config.batch_size}, LR: {Config.lr}, Epochs: {Config.epoch}")
-    model = SimpleNet(num_classes=2).to(Config.device)
+    model = VGGNet(num_classes=2).to(Config.device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=Config.lr)
 
@@ -46,7 +47,7 @@ def main():
     
             print("Best Model Saved.")
             print(f"train loss: {train_loss:.4f} val Loss: {val_loss:.4f}")
-            
+
         else:
             print(f"train loss: {train_loss:.4f} val Loss: {val_loss:.4f}")
 

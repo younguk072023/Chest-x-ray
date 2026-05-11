@@ -11,7 +11,7 @@ class Config:
     data_dir = os.path.join(base_path, 'chest_xray')
     save_dir = os.path.join(base_path, 'weights')
 
-    MODEL_NAME = "SimpleNet"   
+    MODEL_NAME = "MobileNet"   
 
     epoch=50
     lr=1e-4

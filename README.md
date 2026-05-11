@@ -1,7 +1,7 @@
-# Chest X-Ray Pneumonia Classification with Deep Learning & XAI
+# Chest X-Ray Pneumonia Classification & XAI
 
-## Project Overview
-본 프로젝트는 **흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
+## Background
+**흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
 단순한 분류(Classification)를 넘어, 의료 도메인에서의 신뢰성을 확보하기 위해 **Grad-CAM(Gradient-weighted Class Activation Mapping)** 기술을 적용하여 AI의 판단 근거를 시각화(Explainable AI)하였습니다.
 
 ## Dataset
@@ -26,7 +26,7 @@
 
 ## Performance & Results
 
-### 1. Quantitative Evaluation (Test Metrics)
+### Quantitative Evaluation (Test Metrics)
 
 | Model | Accuracy | Precision | Recall | Specificity | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -39,26 +39,42 @@
 
 ---
 
-### 2. Learning Curves (Loss & Accuracy)
-ResNet Loss & Accuracy graph
+### Learning Curves (Loss & Accuracy)
+VGGNet Loss & Accuracy graph
 
 <div align="center">
-  <img src="weights/ResNet/loss_curve.png" alt="Loss Curve" width="48%">
-  <img src="weights/ResNet/accuracy_curve.png" alt="Accuracy Curve" width="48%">
+  <img src="weights/VGGNet/loss_curve.png" alt="Loss Curve" width="48%">
+  <img src="weights/VGGNet/accuracy_curve.png" alt="Accuracy Curve" width="48%">
 </div>
 
 ---
 
-### 3. Confusion Matrix
+### Confusion Matrix
 각 모델이 어느 클래스에서 헷갈려했는지 세부적인 예측 결과를 보여줍니다.
 
 <div align="center">
-  <img src="weights/ResNet/confusion_matrix.png" alt="Confusion Matrix" width="60%">
+  <table>
+    <tr>
+      <td align="center"><b>VGGNet (Best Recall)</b></td>
+      <td align="center"><b>ResNet</b></td>
+    </tr>
+    <tr>
+      <td><img src="weights/VGGNet/confusion_matrix.png" alt="VGG" width="400"></td>
+      <td><img src="weights/ResNet/confusion_matrix.png" alt="ResNet" width="400"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>MobileNet (Best Precision)</b></td>
+      <td align="center"><b>SimpleNet</b></td>
+    </tr>
+    <tr>
+      <td><img src="weights/MobileNet/confusion_matrix.png" alt="MobileNet" width="400"></td>
+      <td><img src="weights/SimpleNet/confusion_matrix.png" alt="SimpleNet" width="400"></td>
+    </tr>
+  </table>
 </div>
-
 ---
 
-### 4. Explainable AI (Grad-CAM)
+### Explainable AI (Grad-CAM)
 블랙박스인 딥러닝 모델의 신뢰성을 부여하기 위해 Grad-CAM을 적용했습니다. 히트맵(빨간색 영역)은 AI가 폐렴이라고 진단할 때 X-Ray 상에서 집중적으로 바라본 병변 부위를 나타냅니다.
 
 <div align="center">
@@ -98,10 +114,10 @@ Chest-x-ray/
 │   ├── ResNet.py          # Custom ResNet (Skip-Connection)
 │   └── MobileNet.py       # Custom MobileNet (Depthwise Separable Conv)
 ├── src/
-│   ├── dataset.py         # Custom Dataset 및 DataLoader 구성
+│   ├── dataset.py         # 데이터 증강 및 정규화
 │   ├── engine.py          # 학습(Train) 및 검증(Validate) 루프
-│   ├── gradcam.py         # Grad-CAM 알고리즘 구현
-│   ├── visualizer.py      # 결과 시각화 (그래프, 오차행렬)
-│   └── utils.py           # 평가 지표 (Accuracy, F1-score 등) 계산
-├── main.py                # 모델 학습 실행 스크립트
-└── predict.py             # 모델 평가 및 Grad-CAM 시각화 스크립트
+│   ├── gradcam.py         # XAI
+│   ├── visualizer.py      # 결과 시각화 
+│   └── utils.py           # 평가 지표 
+├── main.py                # 모델 학습 실행 
+└── predict.py             # 모델 평가 

@@ -5,6 +5,8 @@ import os
 from src.dataset import get_loaders
 from models.SimpleNet import SimpleNet
 from models.VGGNet import VGGNet
+from models.ResNet import ResNet
+from models.MobileNet import MobileNet
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
@@ -13,7 +15,7 @@ def evaluate_on_test(data_dir, save_dir):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     _, _, test_loader = get_loaders(data_dir, batch_size=32)
 
-    model = VGGNet(in_channels=3, num_classes=2).to(device)
+    model = MobileNet(in_channels=3, num_classes=2).to(device)
     model.load_state_dict(torch.load(os.path.join(save_dir, "best_model.pth"), map_location=device, weights_only=True)) #학습할 때 저장해 두었던 가장 best 불러옴
     model.eval()
 

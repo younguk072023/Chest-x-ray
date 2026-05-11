@@ -83,9 +83,9 @@ ResNet Loss & Accuracy graph
 ---
 
 ### Explainable AI (Grad-CAM)
-> ** Visualization Insight:** 시각적 분석 결과, **ResNet**이 모델 중 병변 부위를 가장 정확하고 선명하게 Focusing하여 임상적으로 가장 높은 신뢰도의 판단 근거를 확인하였습니다.
+> **Visualization Insight** > 시각적 분석 결과, **ResNet**이 모델 중 병변 부위를 가장 정확하고 선명하게 Focusing하여 임상적으로 가장 높은 신뢰도의 판단 근거를 확인하였습니다.
 
-<div align="center">
+<div align="center"> 
   <table>
     <tr>
       <td align="center"><b>Original Input</b></td>  

@@ -85,7 +85,7 @@ VGGNet Loss & Accuracy graph
       <td align="center"><b>MobileNet Grad-CAM</b></td>
     </tr>
     <tr>
-      <td><img src="analysis/Original.jpeg" alt="Original" width="300"></td> 
+      <td><img src="analysis/Original.JPEG" alt="Original" width="300"></td> 
       <td><img src="analysis/SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
       <td><img src="analysis/VGGNet.png" alt="VGG Grad-CAM" width="300"></td>
       <td><img src="analysis/ResNet.png" alt="ResNet Grad-CAM" width="300"></td>

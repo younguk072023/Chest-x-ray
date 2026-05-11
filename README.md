@@ -22,17 +22,16 @@
 
 ## Models Implemented
 각기 다른 깊이와 특징을 가진 4가지의 CNN 기반 아키텍처를 직접 구현하고 성능을 비교 분석했습니다.
-1. **SimpleNet:** 기본적인 Conv-Pool 구조를 가진 가벼운 베이스라인 모델
-2. **VGGNet:** 3x3 필터를 깊게 쌓아 미세한 병변 특징을 추출하는 모델 (Custom 10-Layer)
-3. **ResNet:** Skip Connection을 활용하여 기울기 소실 문제를 해결한 모델 (ResNet-18 구조)
-4. **MobileNet:** Depthwise Separable Convolution을 적용하여 파라미터 수와 연산량을 획기적으로 줄인 경량화 모델
+1. **SimpleNet** ([Code](models/SimpleNet.py)): 기본적인 Conv-Pool 구조를 가진 가벼운 베이스라인 모델
+2. **[VGGNet](models/structure/VGGNet.png)** ([Code](models/VGGNet.py)): 3x3 필터를 깊게 쌓아 미세한 병변 특징을 추출하는 모델 (Custom 10-Layer)
+3. **[ResNet](models/structure/ResNet.png)** ([Code](models/ResNet.py)): Skip Connection을 활용하여 기울기 소실 문제를 해결한 모델 (ResNet-18 구조)
+4. **[MobileNet](models/structure/MobileNet.png)** ([Code](models/MobileNet.py)): Depthwise Separable Convolution을 적용하여 파라미터 수와 연산량을 획기적으로 줄인 경량화 모델
 
 ---
 
 ## Performance & Results
 
 ### 1. Quantitative Evaluation (Test Metrics)
-폐렴 진단의 특성상, 환자를 놓치지 않는 것(Recall)과 오진을 줄이는 것(Precision)이 모두 중요하므로 **F1-Score**를 핵심 지표로 활용했습니다.
 
 | Model | Accuracy | Precision | Recall | Specificity | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -41,7 +40,7 @@
 | **ResNet** | **0.9311** | 0.9221 | 0.9718 | 0.8632 | 0.9463 |
 | **MobileNet** | 0.9135 | **0.9330** | 0.9282 | **0.8889** | 0.9306 |
 
-> **💡 핵심 요약:** > VGGNet과 ResNet이 93% 이상의 높은 정확도와 F1-Score를 기록하며 우수한 성능을 보였습니다. 특히 VGGNet은 실제 폐렴 환자를 찾아내는 재현율(Recall)이 97.4%로 가장 높았으며, MobileNet은 파라미터가 적음에도 불구하고 가장 높은 정밀도(Precision)를 보여주었습니다.
+> **Analysis** > VGGNet과 ResNet이 93% 이상의 높은 정확도와 F1-Score를 기록하며 우수한 성능을 보였습니다. 특히 VGGNet은 실제 폐렴 환자를 찾아내는 재현율(Recall)이 97.4%로 가장 높았으며, MobileNet은 파라미터가 적음에도 불구하고 가장 높은 정밀도(Precision)를 보여주었습니다.
 
 ---
 
@@ -70,11 +69,13 @@
 <div align="center">
   <table>
     <tr>
+      <td align="center"><b>SimpleNet Grad-CAM</b></td>  
       <td align="center"><b>VGGNet Grad-CAM</b></td>
       <td align="center"><b>ResNet Grad-CAM</b></td>
       <td align="center"><b>MobileNet Grad-CAM</b></td>
     </tr>
     <tr>
+      <td><img src="images/gradcam_SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
       <td><img src="images/gradcam_vgg.png" alt="VGG Grad-CAM" width="300"></td>
       <td><img src="images/gradcam_resnet.png" alt="ResNet Grad-CAM" width="300"></td>
       <td><img src="images/gradcam_mobilenet.png" alt="MobileNet Grad-CAM" width="300"></td>

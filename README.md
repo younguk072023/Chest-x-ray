@@ -30,10 +30,10 @@
 
 | Model | Accuracy | Precision | Recall | Specificity | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **SimpleNet** | **0.006** | **0.9457** | **0.8923** | **0.9145** | **0.9182** |
+| **SimpleNet** | 0.9006 | **0.9457** | 0.8923 | **0.9145** | 0.9182 |
 | **VGGNet** | **0.9311** | 0.9201 | **0.9744** | 0.8590 | **0.9465** |
 | **ResNet** | **0.9311** | 0.9221 | 0.9718 | 0.8632 | 0.9463 |
-| **MobileNet** | 0.9135 | **0.9330** | 0.9282 | **0.8889** | 0.9306 |
+| **MobileNet** | 0.9135 | 0.9330 | 0.9282 | 0.8889 | 0.9306 |
 
 > **Analysis** > VGGNet과 ResNet이 93% 이상의 높은 정확도와 F1-Score를 기록하며 우수한 성능을 보였습니다. 특히 VGGNet은 실제 폐렴 환자를 찾아내는 재현율(Recall)이 97.4%로 가장 높았으며, MobileNet은 파라미터가 적음에도 불구하고 가장 높은 정밀도(Precision)를 보여주었습니다.
 
@@ -79,17 +79,18 @@ VGGNet Loss & Accuracy graph
 <div align="center">
   <table>
     <tr>
+      <td align="center"><b>Original Input</b></td>  
       <td align="center"><b>SimpleNet Grad-CAM</b></td>  
       <td align="center"><b>VGGNet Grad-CAM</b></td>
       <td align="center"><b>ResNet Grad-CAM</b></td>
       <td align="center"><b>MobileNet Grad-CAM</b></td>
     </tr>
     <tr>
-      <td><img src="analysis/Original.JPEG" alt="Original" width="300"></td> 
-      <td><img src="analysis/SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
-      <td><img src="analysis/VGGNet.png" alt="VGG Grad-CAM" width="300"></td>
-      <td><img src="analysis/ResNet.png" alt="ResNet Grad-CAM" width="300"></td>
-      <td><img src="analysis/MobileNet.png" alt="MobileNet Grad-CAM" width="300"></td>
+      <td><img src="analysis/Original.JPEG" alt="Original" width="160"></td> 
+      <td><img src="analysis/SimpleNet.png" alt="SimpleNet Grad-CAM" width="160"></td>  
+      <td><img src="analysis/VGGNet.png" alt="VGG Grad-CAM" width="160"></td>
+      <td><img src="analysis/ResNet.png" alt="ResNet Grad-CAM" width="160"></td>
+      <td><img src="analysis/MobileNet.png" alt="MobileNet Grad-CAM" width="160"></td>
     </tr>
   </table>
 </div>

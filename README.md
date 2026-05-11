@@ -30,7 +30,7 @@
 
 | Model | Accuracy | Precision | Recall | Specificity | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **SimpleNet** | `학습 완료 후 기입` | `TBA` | `TBA` | `TBA` | `TBA` |
+| **SimpleNet** | **0.006** | **0.9457** | **0.8923** | **0.9145** | **0.9182** |
 | **VGGNet** | **0.9311** | 0.9201 | **0.9744** | 0.8590 | **0.9465** |
 | **ResNet** | **0.9311** | 0.9221 | 0.9718 | 0.8632 | 0.9463 |
 | **MobileNet** | 0.9135 | **0.9330** | 0.9282 | **0.8889** | 0.9306 |
@@ -50,12 +50,11 @@ VGGNet Loss & Accuracy graph
 ---
 
 ### Confusion Matrix
-각 모델이 어느 클래스에서 헷갈려했는지 세부적인 예측 결과를 보여줍니다.
 
 <div align="center">
   <table>
     <tr>
-      <td align="center"><b>VGGNet (Best Recall)</b></td>
+      <td align="center"><b>VGGNet</b></td>
       <td align="center"><b>ResNet</b></td>
     </tr>
     <tr>
@@ -63,7 +62,7 @@ VGGNet Loss & Accuracy graph
       <td><img src="weights/ResNet/confusion_matrix.png" alt="ResNet" width="400"></td>
     </tr>
     <tr>
-      <td align="center"><b>MobileNet (Best Precision)</b></td>
+      <td align="center"><b>MobileNet</b></td>
       <td align="center"><b>SimpleNet</b></td>
     </tr>
     <tr>
@@ -72,10 +71,10 @@ VGGNet Loss & Accuracy graph
     </tr>
   </table>
 </div>
+
 ---
 
 ### Explainable AI (Grad-CAM)
-블랙박스인 딥러닝 모델의 신뢰성을 부여하기 위해 Grad-CAM을 적용했습니다. 히트맵(빨간색 영역)은 AI가 폐렴이라고 진단할 때 X-Ray 상에서 집중적으로 바라본 병변 부위를 나타냅니다.
 
 <div align="center">
   <table>
@@ -86,10 +85,11 @@ VGGNet Loss & Accuracy graph
       <td align="center"><b>MobileNet Grad-CAM</b></td>
     </tr>
     <tr>
-      <td><img src="images/SimpleNet/gradcam_SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
-      <td><img src="weights/VGGNet/gradcam_results/000_01_IM-0003-0001_GT-NORMAL_Pred-NORMAL_Prob-1.00.png" alt="VGG Grad-CAM" width="300"></td>
-      <td><img src="weights/ResNet/gradcam_results/000_01_IM-0003-0001_GT-NORMAL_Pred-NORMAL_Prob-1.00.png" alt="ResNet Grad-CAM" width="300"></td>
-      <td><img src="weights/MobileNet/gradcam_results/cam_0_1_NORMAL.png" alt="MobileNet Grad-CAM" width="300"></td>
+      <td><img src="analysis/Original.jpeg" alt="Original" width="300"></td> 
+      <td><img src="analysis/SimpleNet.png" alt="SimpleNet Grad-CAM" width="300"></td>  
+      <td><img src="analysis/VGGNet.png" alt="VGG Grad-CAM" width="300"></td>
+      <td><img src="analysis/ResNet.png" alt="ResNet Grad-CAM" width="300"></td>
+      <td><img src="analysis/MobileNet.png" alt="MobileNet Grad-CAM" width="300"></td>
     </tr>
   </table>
 </div>

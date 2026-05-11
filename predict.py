@@ -195,7 +195,7 @@ def predict():
 
     # batch size x gradcam_batch_limit
 
-    gradcam_batch_limit = 5
+    gradcam_batch_limit = 10
 
     for i, (images, labels, paths) in enumerate(test_loader):
         images = images.to(device)

@@ -40,11 +40,11 @@
 ---
 
 ### Learning Curves (Loss & Accuracy)
-VGGNet Loss & Accuracy graph
+ResNet Loss & Accuracy graph
 
 <div align="center">
-  <img src="weights/VGGNet/loss_curve.png" alt="Loss Curve" width="48%">
-  <img src="weights/VGGNet/accuracy_curve.png" alt="Accuracy Curve" width="48%">
+  <img src="weights/ResNet/loss_curve.png" alt="Loss Curve" width="48%">
+  <img src="weights/ResNet/accuracy_curve.png" alt="Accuracy Curve" width="48%">
 </div>
 
 ---
@@ -75,6 +75,7 @@ VGGNet Loss & Accuracy graph
 ---
 
 ### Explainable AI (Grad-CAM)
+> ** Visualization Insight:** 시각적 분석 결과, **ResNet**이 모델 중 병변 부위를 가장 정확하고 선명하게 Focusing하여 임상적으로 가장 높은 신뢰도의 판단 근거를 확인하였습니다.
 
 <div align="center">
   <table>

@@ -98,11 +98,11 @@ VGGNet Loss & Accuracy graph
 ---
 
 ## \Tech Stack & Environment
-* **Language:** Python 3.8+
-* **Deep Learning Framework:** PyTorch, Torchvision
+* **Language:** Python 3.10.0
+* **Deep Learning Framework:** PyTorch 2.5.1, Torchvision
 * **Image Processing:** OpenCV, PIL
 * **Data Visualization:** Matplotlib, Seaborn
-* **Environment:** CUDA (GPU Acceleration)
+* **Environment:** CUDA 12.1 (GPU Acceleration)
 
 ## Repository Structure
 ```text

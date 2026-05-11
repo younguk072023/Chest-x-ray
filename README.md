@@ -1,10 +1,5 @@
 # Chest X-Ray Pneumonia Classification with Deep Learning & XAI
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.12+-EE4C2C.svg)
-![Computer Vision](https://img.shields.io/badge/Task-Image_Classification-success)
-![Explainable AI](https://img.shields.io/badge/Tech-Grad_CAM-orange)
-
 ## Project Overview
 본 프로젝트는 **흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
 단순한 분류(Classification)를 넘어, 의료 도메인에서의 신뢰성을 확보하기 위해 **Grad-CAM(Gradient-weighted Class Activation Mapping)** 기술을 적용하여 AI의 판단 근거를 시각화(Explainable AI)하였습니다.
@@ -48,8 +43,8 @@
 모델의 학습 과정을 나타내는 그래프입니다. 과적합(Overfitting) 여부와 학습 안정성을 확인할 수 있습니다.
 
 <div align="center">
-  <img src="images/loss_curve.png" alt="Loss Curve" width="48%">
-  <img src="images/acc_curve.png" alt="Accuracy Curve" width="48%">
+  <img src="weights/ResNet/loss_curve.png" alt="Loss Curve" width="48%">
+  <img src="weights/ResNet/accuracy_curve.png" alt="Accuracy Curve" width="48%">
 </div>
 
 ---
@@ -58,13 +53,13 @@
 각 모델이 어느 클래스에서 헷갈려했는지 세부적인 예측 결과를 보여줍니다.
 
 <div align="center">
-  <img src="images/confusion_matrix.png" alt="Confusion Matrix" width="60%">
+  <img src="weights/ResNet/confusion_matrix.png" alt="Confusion Matrix" width="60%">
 </div>
 
 ---
 
 ### 4. Explainable AI (Grad-CAM)
-블랙박스인 딥러닝 모델의 신뢰성을 부여하기 위해 Grad-CAM을 적용했습니다. 히트맵(빨간색 영역)은 AI가 폐렴이라고 진단할 때 엑스레이 상에서 집중적으로 바라본 병변 부위를 나타냅니다.
+블랙박스인 딥러닝 모델의 신뢰성을 부여하기 위해 Grad-CAM을 적용했습니다. 히트맵(빨간색 영역)은 AI가 폐렴이라고 진단할 때 X-Ray 상에서 집중적으로 바라본 병변 부위를 나타냅니다.
 
 <div align="center">
   <table>

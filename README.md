@@ -80,10 +80,10 @@ VGGNet Loss & Accuracy graph
   <table>
     <tr>
       <td align="center"><b>Original Input</b></td>  
-      <td align="center"><b>SimpleNet Grad-CAM</b></td>  
-      <td align="center"><b>VGGNet Grad-CAM</b></td>
-      <td align="center"><b>ResNet Grad-CAM</b></td>
-      <td align="center"><b>MobileNet Grad-CAM</b></td>
+      <td align="center"><b>SimpleNet</b></td>  
+      <td align="center"><b>VGGNet</b></td>
+      <td align="center"><b>ResNet</b></td>
+      <td align="center"><b>MobileNet</b></td>
     </tr>
     <tr>
       <td><img src="analysis/Original.png" alt="Original" width="160"></td> 

@@ -1,14 +1,111 @@
-# Chest-x-ray
+# Chest X-Ray Pneumonia Classification with Deep Learning & XAI
 
-## 데이터 : Kaggle Chest X-Ray Images (Pneumonia) 참고
-https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![PyTorch](https://img.shields.io/badge/PyTorch-1.12+-EE4C2C.svg)
+![Computer Vision](https://img.shields.io/badge/Task-Image_Classification-success)
+![Explainable AI](https://img.shields.io/badge/Tech-Grad_CAM-orange)
 
-0 : Normal 1 : PNEUMONIA
+## Project Overview
+본 프로젝트는 **흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
+단순한 분류(Classification)를 넘어, 의료 도메인에서의 신뢰성을 확보하기 위해 **Grad-CAM(Gradient-weighted Class Activation Mapping)** 기술을 적용하여 AI의 판단 근거를 시각화(Explainable AI)하였습니다.
 
-train = 1341 , 3875
+## Dataset
+* **Source:** [Kaggle Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+* **Classes:** `0: Normal` (정상) / `1: Pneumonia` (폐렴)
+* **Data Distribution:** 폐렴 데이터가 상대적으로 많은 불균형(Imbalanced) 데이터셋입니다.
 
-val = 8 , 8
+| Dataset | Normal (0) | Pneumonia (1) | Total |
+| :--- | :---: | :---: | :---: |
+| **Train** | 1,341 | 3,875 | 5,216 |
+| **Validation** | 8 | 8 | 16 |
+| **Test** | 234 | 390 | 624 |
 
-test = 234 , 390
+## Models Implemented
+각기 다른 깊이와 특징을 가진 4가지의 CNN 기반 아키텍처를 직접 구현하고 성능을 비교 분석했습니다.
+1. **SimpleNet:** 기본적인 Conv-Pool 구조를 가진 가벼운 베이스라인 모델
+2. **VGGNet:** 3x3 필터를 깊게 쌓아 미세한 병변 특징을 추출하는 모델 (Custom 10-Layer)
+3. **ResNet:** Skip Connection을 활용하여 기울기 소실 문제를 해결한 모델 (ResNet-18 구조)
+4. **MobileNet:** Depthwise Separable Convolution을 적용하여 파라미터 수와 연산량을 획기적으로 줄인 경량화 모델
 
-Classification Model을 활용해서 비정상 폐렴군의 이미지를 분류함
+---
+
+## Performance & Results
+
+### 1. Quantitative Evaluation (Test Metrics)
+폐렴 진단의 특성상, 환자를 놓치지 않는 것(Recall)과 오진을 줄이는 것(Precision)이 모두 중요하므로 **F1-Score**를 핵심 지표로 활용했습니다.
+
+| Model | Accuracy | Precision | Recall | Specificity | F1-Score |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **SimpleNet** | `학습 완료 후 기입` | `TBA` | `TBA` | `TBA` | `TBA` |
+| **VGGNet** | **0.9311** | 0.9201 | **0.9744** | 0.8590 | **0.9465** |
+| **ResNet** | **0.9311** | 0.9221 | 0.9718 | 0.8632 | 0.9463 |
+| **MobileNet** | 0.9135 | **0.9330** | 0.9282 | **0.8889** | 0.9306 |
+
+> **💡 핵심 요약:** > VGGNet과 ResNet이 93% 이상의 높은 정확도와 F1-Score를 기록하며 우수한 성능을 보였습니다. 특히 VGGNet은 실제 폐렴 환자를 찾아내는 재현율(Recall)이 97.4%로 가장 높았으며, MobileNet은 파라미터가 적음에도 불구하고 가장 높은 정밀도(Precision)를 보여주었습니다.
+
+---
+
+### 2. Learning Curves (Loss & Accuracy)
+모델의 학습 과정을 나타내는 그래프입니다. 과적합(Overfitting) 여부와 학습 안정성을 확인할 수 있습니다.
+
+<div align="center">
+  <img src="images/loss_curve.png" alt="Loss Curve" width="48%">
+  <img src="images/acc_curve.png" alt="Accuracy Curve" width="48%">
+</div>
+
+---
+
+### 3. Confusion Matrix
+각 모델이 어느 클래스에서 헷갈려했는지 세부적인 예측 결과를 보여줍니다.
+
+<div align="center">
+  <img src="images/confusion_matrix.png" alt="Confusion Matrix" width="60%">
+</div>
+
+---
+
+### 4. Explainable AI (Grad-CAM)
+블랙박스인 딥러닝 모델의 신뢰성을 부여하기 위해 Grad-CAM을 적용했습니다. 히트맵(빨간색 영역)은 AI가 폐렴이라고 진단할 때 엑스레이 상에서 집중적으로 바라본 병변 부위를 나타냅니다.
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><b>VGGNet Grad-CAM</b></td>
+      <td align="center"><b>ResNet Grad-CAM</b></td>
+      <td align="center"><b>MobileNet Grad-CAM</b></td>
+    </tr>
+    <tr>
+      <td><img src="images/gradcam_vgg.png" alt="VGG Grad-CAM" width="300"></td>
+      <td><img src="images/gradcam_resnet.png" alt="ResNet Grad-CAM" width="300"></td>
+      <td><img src="images/gradcam_mobilenet.png" alt="MobileNet Grad-CAM" width="300"></td>
+    </tr>
+  </table>
+</div>
+
+---
+
+## \Tech Stack & Environment
+* **Language:** Python 3.8+
+* **Deep Learning Framework:** PyTorch, Torchvision
+* **Image Processing:** OpenCV, PIL
+* **Data Visualization:** Matplotlib, Seaborn
+* **Environment:** CUDA (GPU Acceleration)
+
+## Repository Structure
+```text
+Chest-x-ray/
+├── configs/
+│   └── config.py          # 하이퍼파라미터 및 경로 설정 파일
+├── models/
+│   ├── SimpleNet.py       # 베이스라인 모델
+│   ├── VGGNet.py          # Custom VGG (10-Layer)
+│   ├── ResNet.py          # Custom ResNet (Skip-Connection)
+│   └── MobileNet.py       # Custom MobileNet (Depthwise Separable Conv)
+├── src/
+│   ├── dataset.py         # Custom Dataset 및 DataLoader 구성
+│   ├── engine.py          # 학습(Train) 및 검증(Validate) 루프
+│   ├── gradcam.py         # Grad-CAM 알고리즘 구현
+│   ├── visualizer.py      # 결과 시각화 (그래프, 오차행렬)
+│   └── utils.py           # 평가 지표 (Accuracy, F1-score 등) 계산
+├── main.py                # 모델 학습 실행 스크립트
+└── predict.py             # 모델 평가 및 Grad-CAM 시각화 스크립트

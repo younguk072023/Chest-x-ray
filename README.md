@@ -4,13 +4,15 @@
 **흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
 단순한 분류(Classification)를 넘어, 의료 도메인에서의 신뢰성을 확보하기 위해 **Grad-CAM(Gradient-weighted Class Activation Mapping)** 기술을 적용하여 AI의 판단 근거를 시각화(Explainable AI)하였습니다.
 
-Chest X-ray image
+```text
+Chest X-ray Image
         ↓
-CNN-based classification
+CNN-based Classification
         ↓
-Grad-CAM visualization
+Grad-CAM Visualization
         ↓
-VLM-based textual description
+VLM-based Textual Description
+```
 
 ## Dataset
 * **Source:** [Kaggle Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)

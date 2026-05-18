@@ -106,6 +106,30 @@ ResNet Loss & Accuracy graph
 
 ---
 
+### Vision-Language Model (VLM) Analysis
+
+In addition to CNN-based classification and Grad-CAM visualization, this project includes a VLM-based qualitative image description module using **Moondream2**.
+
+The purpose of this module is not to perform final disease classification, but to generate a natural-language description of visible chest X-ray findings that may be relevant to pneumonia. This provides an additional interpretability layer by connecting the visual input with textual explanation.
+
+#### VLM Setup
+
+* **Model:** `vikhyatk/moondream2`
+* **Revision:** `2025-06-21`
+* **Input:** Chest X-ray image (`analysis/Original.png`)
+* **Prompt Type:** Medical image description prompt
+* **Output:** Textual description of visible findings
+* **Device:** CPU-based inference
+
+#### Prompt Used
+
+```text
+Describe this chest x-ray image.
+Do not provide a clinical diagnosis.
+Only describe visible findings that may be relevant to pneumonia.
+
+---
+
 ## \Tech Stack & Environment
 * **Language:** Python 3.10.0
 * **Deep Learning Framework:** PyTorch 2.5.1, Torchvision

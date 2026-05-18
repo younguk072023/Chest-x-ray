@@ -5,23 +5,27 @@ from PIL import Image
 model_id = "vikhyatk/moondream2"
 revision = "2025-06-21"
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+dtype = torch.float16 if device == "cuda" else torch.float32
+
+print(f"사용 장치: {device}")
 print("Moondream2 모델 로드 중...")
 
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
     revision=revision,
     trust_remote_code=True,
-    torch_dtype=torch.float32
+    dtype=dtype,
+    device_map=device
 )
 
-model = model.to("cpu")
 model.eval()
 
 image_path = "analysis/Original.png"
 image = Image.open(image_path).convert("RGB")
 
 question = (
-    "Describe this chest x-ray image. "
+    "Describe this chest X-ray image. "
     "Do not provide a clinical diagnosis. "
     "Only describe visible findings that may be relevant to pneumonia."
 )
@@ -34,7 +38,7 @@ result = model.query(
     settings={
         "variant": None,
         "temperature": 0.2,
-        "max_tokens": 256,
+        "max_tokens": 128,
         "top_p": 0.3
     }
 )

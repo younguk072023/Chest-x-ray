@@ -4,6 +4,14 @@
 **흉부 X-ray 이미지를 분석하여 정상(Normal)과 폐렴(Pneumonia)을 자동으로 분류하는 딥러닝 모델**을 개발하는 것을 목표로 합니다.
 단순한 분류(Classification)를 넘어, 의료 도메인에서의 신뢰성을 확보하기 위해 **Grad-CAM(Gradient-weighted Class Activation Mapping)** 기술을 적용하여 AI의 판단 근거를 시각화(Explainable AI)하였습니다.
 
+Chest X-ray image
+        ↓
+CNN-based classification
+        ↓
+Grad-CAM visualization
+        ↓
+VLM-based textual description
+
 ## Dataset
 * **Source:** [Kaggle Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
 * **Classes:** `0: Normal` (정상) / `1: Pneumonia` (폐렴)
@@ -108,9 +116,9 @@ ResNet Loss & Accuracy graph
 
 ### Vision-Language Model (VLM) Analysis
 
-In addition to CNN-based classification and Grad-CAM visualization, this project includes a VLM-based qualitative image description module using **Moondream2**.
+CNN 기반 분류와 Grad-CAM 시각화에 더해,  **Moondream2**를 활용한 VLM 기반 정성적 영상 설명 모듈을 포함하였습니다.
 
-The purpose of this module is not to perform final disease classification, but to generate a natural-language description of visible chest X-ray findings that may be relevant to pneumonia. This provides an additional interpretability layer by connecting the visual input with textual explanation.
+이 모듈의 목적은 최종 질병 분류를 수행하는 것이 아니라, 폐렴과 관련될 수 있는 흉부 X-ray 영상 내 시각적 소견을 자연어로 설명하는 데 있습니다. 이를 통해 영상 입력과 텍스트 설명을 연결하여, 모델 해석을 보조하는 추가적인 설명 가능성 요소를 제공합니다.
 
 #### VLM Setup
 
@@ -119,14 +127,9 @@ The purpose of this module is not to perform final disease classification, but t
 * **Input:** Chest X-ray image (`analysis/Original.png`)
 * **Prompt Type:** Medical image description prompt
 * **Output:** Textual description of visible findings
-* **Device:** CPU-based inference
 
-#### Prompt Used
-
-```text
-Describe this chest x-ray image.
-Do not provide a clinical diagnosis.
-Only describe visible findings that may be relevant to pneumonia.
+#### VLM output
+The chest X-ray reveals a clear, symmetrical view of the ribcage, lungs, and heart. The lungs appear somewhat compressed, possibly due to pneumonia. The heart is positioned centrally in the image. The overall appearance is consistent with typical chest X-ray findings.
 
 ---
 
@@ -155,3 +158,4 @@ Chest-x-ray/
 │   └── utils.py           # 평가 지표 
 ├── main.py                # 모델 학습 실행 
 └── predict.py             # 모델 평가 
+└── VLM.py                 # 흉부 X-ray 자연어 설명 생성

@@ -127,8 +127,9 @@ CNN 기반 분류와 Grad-CAM 시각화에 더해,  **Moondream2**를 활용한 
 * **Input:** Chest X-ray image (`analysis/Original.png`)
 * **Prompt Type:** Medical image description prompt
 * **Output:** Textual description of visible findings
+---
 
-#### VLM output
+### VLM output
 The chest X-ray reveals a clear, symmetrical view of the ribcage, lungs, and heart. The lungs appear somewhat compressed, possibly due to pneumonia. The heart is positioned centrally in the image. The overall appearance is consistent with typical chest X-ray findings.
 
 ---
